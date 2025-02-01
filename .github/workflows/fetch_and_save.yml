@@ -1,0 +1,37 @@
+name: Fetch and Save Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * 1' # once week às 01:00 UTC
+
+jobs:
+  fetch_and_save:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch and save data (devto.json)
+        env:
+          DEVTO_API_URL: ${{ vars.DEVTO_API_URL }}
+          DEVTO_TOKEN: ${{ secrets.DEVTO_TOKEN }}
+          OUTPUT_FILE: 'devto.json'
+          GIT_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_NAME: GitHub Actions Bot
+        run: node devto_fetch_and_save.js
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push
