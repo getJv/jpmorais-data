@@ -1,6 +1,42 @@
 [
   {
     "type_of": "article",
+    "id": 4555408,
+    "title": "AI-memory on VPS",
+    "description": "I hope you already heart about the Akita's ai-memory project if not, hurry up you are missing a handy...",
+    "published": true,
+    "published_at": "2026-09-02T11:26:36.338Z",
+    "slug": "ai-memory-on-vps-217n",
+    "path": "/getjv/ai-memory-on-vps-217n",
+    "url": "https://dev.to/getjv/ai-memory-on-vps-217n",
+    "comments_count": 0,
+    "public_reactions_count": 1,
+    "page_views_count": 2,
+    "published_timestamp": "2026-09-02T11:26:36Z",
+    "body_markdown": "\nI hope you already heart about the [Akita's ai-memory project][ai-memory] if not, hurry up you are missing a handy tool. it is a great solution for maintaining context and speed when working with agents, across different agents and projects. visit his repo a give a read about it.\n\nI started using it locally, but whenever I switched environments, computers, or instances, the memory I needed was isolated somewhere else. Thankfully, Akita made this solution ready to be used in a centralized way.\n\nYesterday, I decided to solve this need. I sign up a very small VPS: 1 core, 1GB of RAM. It's good, cheap, and perfectly meets my needs:\n1. Being online and accessible from anywhere.\n2. Isolating ai-memory so it only talks to the LLM route. (After all... is better be on the safer side)\n3. Having baseline security to protect my data.\n4. Being available under my own subdomain.\n\nIt worked out great for me and will cost less than $2 a month to have my context available in any environment I need.\n \nIf you ever need something similar, just [clone the project][ai-memory-on-vps], point it to your VPS, and BOOM—you're done.\n\nIt’s basically an Ansible setup that connects to your fresh VPS, adds your SSH key, sets up a reverse proxy, starts the ai-memory container (with web access blocked except for the LLM route), and handles the SSL certificate. And of course, the wiki route is protected by a token generated during deployment.\n\nAnyway, huge thanks to [Akita] for building this tool, and here are my two cents to add to it.\n\n---\n[ai-memory]: https://github.com/akitaonrails/ai-memory\n[ai-memory-on-vps]: https://github.com/getJv/ai-memory-on-vps\n[Akita]:https://www.linkedin.com/in/akitaonrails/\n",
+    "positive_reactions_count": 1,
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fh6hawxh4mxpbr3xkzy8o.png",
+    "tag_list": [
+      "claude",
+      "mcp",
+      "tooling",
+      "openai"
+    ],
+    "canonical_url": "https://dev.to/getjv/ai-memory-on-vps-217n",
+    "reading_time_minutes": 2,
+    "user": {
+      "name": "Jhonatan Morais",
+      "username": "getjv",
+      "twitter_username": "getJv",
+      "github_username": "getJv",
+      "user_id": 219482,
+      "website_url": "https://www.linkedin.com/in/jhonatan-morais/?locale=en_US",
+      "profile_image": "https://media2.dev.to/dynamic/image/width=640,height=640,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F219482%2Ff46c4d4c-34ba-4864-9765-f7d5ae7b89df.jpeg",
+      "profile_image_90": "https://media2.dev.to/dynamic/image/width=90,height=90,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F219482%2Ff46c4d4c-34ba-4864-9765-f7d5ae7b89df.jpeg"
+    }
+  },
+  {
+    "type_of": "article",
     "id": 2970040,
     "title": "Meetup: Show Your Stack! TypeScript Community",
     "description": "A meetup with a great audience and tons of high-quality content, that’s the best way to describe the...",
@@ -479,7 +515,7 @@
     "url": "https://dev.to/getjv/tailwind-css-with-air-and-go-no-node-no-problem-3j92",
     "comments_count": 0,
     "public_reactions_count": 2,
-    "page_views_count": 964,
+    "page_views_count": 978,
     "published_timestamp": "2025-04-14T15:00:00Z",
     "body_markdown": "What about to avoid using NPM/Node as much as possible and do not need to managing the overwhelming number of dependencies it introduces, I did that decision to my new personal PoC. \n\n**However, I still want to use Tailwind CSS**, and after reading through the documentation, I found an amazing way to compile CSS files with Tailwind—without relying on Node.\n\nThe best part? It can be set up to **auto-generate CSS files whenever changes occur**.\n\nI'm writing this down because with the release of [**Tailwind CSS v4**][tailwind-v4], there are significant changes in how the setup works. \n\n---\nPlease Like, share and follow :D\n\n---\n\n\nAutomating the process requires a few steps, so let's dive right in.\nHere's the structure of my project:\n\n```shell\nproject_folder/\n├── bin/\n│   └── tailwind/\n│       ├── download-tailwindcss.sh\n│       └── tailwindcss\n├── cmd/\n│   ├── api/\n│   │   └── main.go\n│   ├── static/\n│   │   └── styles.css\n│   └── templates/\n│       ├── styles/\n│       │   └── index.css\n│       └── index.html\n├── .air.toml\n```\n\nNow, let's look at the overall picture. For clarity, follow the folder structure diagram as I explain each step:\n\n1. `cmd/api/main.go` serves the `templates/*.html` files and the `static/*.*` files as public assets.\n2. The Tailwind directives, imports, and configuration reside in `templates/styles/index.css`, which acts as the \"source code\" for the styles.\n3. All the `templates/*.html` files can freely utilize Tailwind's utility classes.\n4. [`.air.toml`][air-site] is tasked with automatically watching all project changes, including recompiling `templates/styles/index.css` using its `pre-build` commands.\n5. `bin/tailwind/download-tailwindcss.sh` is responsible for downloading (or updating) the TailwindCSS CLI. You are responsible ro run it.\n6. The file `bin/tailwind/tailwindcss` is the TailwindCSS CLI itself, which is used by `air` to recompile the Tailwind styles into the `static/styles.css` file whenever changes are made.\n\n\nFor the sake of saving time, I won't delve too much into how Go serves HTML and static files using an HTTP web server—you can easily find that information online. \n\nInstead, I'll focus on the **Tailwind and `air` setup**, as this is critical to getting everything to work smoothly.\n\n\n### Installing the TailwindCSS CLI Compiler\n\nFirst, take a look at `bin/tailwind/download-tailwindcss.sh`, which:\n1. Detects your operating system.\n2. Downloads the TailwindCSS CLI from the official repository.\n3. Renames the downloaded file to `tailwindcss` for simplicity.\n4. Marks the `tailwindcss` file as executable.\n5. If an error occurs during the process, it suggests manually downloading the file.\n\nHere's the complete script:\n\n```shell\n#!/bin/bash\n\n# file name\nTAILWIND_BIN=\"tailwindcss\"\nTAILWIND_BIN_PATH=\"${PWD}/${TAILWIND_BIN}\"\n\necho \"Downloading Tailwind CSS CLI...\"\n\n# OS detector\nif [[ \"$OSTYPE\" == \"linux-gnu\"* ]]; then\n  curl -L https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 -o \"$TAILWIND_BIN\"\nelif [[ \"$OSTYPE\" == \"darwin\"* ]]; then\n  curl -L https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-macos-arm64 -o \"$TAILWIND_BIN\"\nelse\n  echo \"OS not supported. Try to download manually\"\n  exit 1\nfi\n\n# Set permission to make the file executable\necho \"Setting the file as executable...\"\necho \"$PWD\"\nchmod +x \"$TAILWIND_BIN_PATH\"\n\necho \"Tailwind CSS CLI is Installed!\"\necho \"Executable path: $TAILWIND_BIN_PATH\"\n```\n\n### Configuring `air` to Automatically Compile CSS\n\nAt this stage, your Go project should already be monitored by [`air`][air-site]. \n\nNow, you'll need to update the configuration to allow it to **use pre-build commands to recompile the CSS** whenever changes are detected.\n\nHere are the key updates to make in the `.air.toml` file:\n\n```toml\n# ... other keys omitted for readability\n[build]\n  # ... other keys omitted for readability\n  include_ext = [\"go\", \"tpl\", \"tmpl\", \"html\",\"css\"]\n  # ... other keys ommited for readability\n  pre_cmd = [\"./bin/tailwind/tailwindcss -i ./templates/styles/index.css -o ./static/styles.css\"]\n# ... other keys ommited for readability\n```\n\nAs shown in the snippet above, you need to:\n\n1. Add the `\"css\"` extension to the `include_ext` list so `air` watches CSS files as well.\n2. Add a `pre_cmd` to compile the `templates/styles/index.css` into `static/styles.css`.\n\n\nYES!!!! It will automatically execute on every change. BUT it saves you from the hassle of doing it yourself—or worse, forgetting to do it altogether. Let the machine handle the work! :D\n\n#### **Important Notes**\n\n1. Remember to adjust this command when building for production—adding minification, for instance.\n2. Sometimes, your browser might cache the CSS changes, so get used to forcing a refresh:\n    - **Windows/Linux**: Use `CTRL + F5`.\n    - **Mac**: Use `CMD + SHIFT + R`.\n\n### Tailwind CSS Version 4\n\n[Tailwind CSS has made huge improvements in version 4][tailwind-v4], and one exciting change is the **removal of the `tailwind.config.js` file**. \n\nIt has also simplified the way you load directives and settings—allowing you to define them directly in your `.css` file. Great work by the Tailwind team!\n\nHere’s the setup you should consider using, based on a structure similar to mine:\n\n```css\n/* file: `template/styles/index.css` */\n@import \"tailwindcss\";\n@source \"../**/*.html\";\n```\n\nShort, clean, and simple—so much better!\n\n### Final words\n\nThis configuration will surely enhance your development experience. If you have any questions, feel free to ask in the comments.\n\nAnd hey, don’t forget to like, share, or follow me on [LinkedIn][linkedin] or check out my posts on [dev.to][blog]! :)\n\n\n[air-site]: https://github.com/air-verse/air\n[tailwind-v4]: https://tailwindcss.com/blog/tailwindcss-v4#simplified-installation\n[blog]: https://dev.to/getjv\n[linkedin]: https://www.linkedin.com/in/jhonatan-morais/",
     "positive_reactions_count": 2,
