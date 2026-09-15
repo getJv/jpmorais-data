@@ -3,7 +3,7 @@ name: Fetch and Save Data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 * * 1' # once week às 01:00 UTC
+    - cron: '0 1 1 * *' # once a month
 
 jobs:
   fetch_and_save:
